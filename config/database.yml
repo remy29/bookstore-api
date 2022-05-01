@@ -1,0 +1,10 @@
+development:
+  adapter: mysql2
+  database: netcent_api_dev
+  username: root
+  password: password
+  encoding: utf8
+  host: localhost
+  reconnect: <%= ENV['RAILS_RECONNECT_DB'] || false %>
+  pool: 5
+  socket: /tmp/mysql.sock
