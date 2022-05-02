@@ -4,9 +4,23 @@ class Book < ApplicationRecord
   validates :author, presence: true
   validates :title, presence: true
   validates :status, presence: true
-  validates :stock, presence: true, numericality: true
+  validates :stock, presence: true, numericality: { greater_than_or_equal_to: 0 }
 
   enum status: %i[in_stock low_on_stock out_of_stock]
+
+  def update_status(new_stock)
+    return unless new_stock
+
+    if new_stock.zero?
+      update(status: 'out_of_stock')
+    elsif new_stock.positive? && new_stock < 4
+      update(status: 'low_on_stock')
+    elsif new_stock >= 4
+      update(status: 'in_stock')
+    else
+      raise 'invalid stock update amount'
+    end
+  end
 
   private
 
