@@ -11,8 +11,11 @@ class BookStockManagementController < ApplicationController
       render json: {
         error: new_book.errors.messages
       }, status: :bad_request
+      return
     end
-    # render json: {message: "#{create_params[:title]}, by "}
+    render json: {
+      message: "#{params[:title]}, by #{params[:author]}, with ISBN #{params[:isbn]} saved to database"
+    }
   rescue StandardError => e
     render json: {
       error: e
