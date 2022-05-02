@@ -14,7 +14,7 @@ class BookStockManagementController < ApplicationController
       return
     end
     render json: {
-      message: "#{params[:title]}, by #{params[:author]}, with ISBN #{params[:isbn]} saved to database"
+      message: "#{params[:title]}, by #{params[:author]}, with ISBN #{params[:isbn]} saved to database with stock level: #{params[:stock]}"
     }
   rescue StandardError => e
     render json: {
@@ -31,6 +31,6 @@ class BookStockManagementController < ApplicationController
   private
 
   def create_params
-    params.permit(:title, :author, :isbn)
+    params.permit(:title, :author, :isbn, :stock, :status)
   end
 end
