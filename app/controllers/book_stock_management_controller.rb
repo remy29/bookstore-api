@@ -7,12 +7,9 @@ class BookStockManagementController < ApplicationController
 
   def create
     new_book = Book.new(create_params)
-    unless new_book.save
-      render json: {
-        error: new_book.errors.messages
-      }, status: :bad_request
-      return
-    end
+
+    raise new_book.errors.to_json unless new_book.save
+
     render json: {
       message: "#{params[:title]}, by #{params[:author]}, with ISBN #{params[:isbn]} saved to database with stock level: #{params[:stock]}"
     }
