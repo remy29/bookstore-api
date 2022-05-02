@@ -3,6 +3,10 @@ class Book < ApplicationRecord
   validates :isbn, uniqueness: true
   validates :author, presence: true
   validates :title, presence: true
+  validates :status, presence: true
+  validates :stock, presence: true, numericality: true
+
+  enum status: %i[in_stock low_on_stock out_of_stock]
 
   private
 
