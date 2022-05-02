@@ -16,7 +16,6 @@ ActiveRecord::Schema.define(version: 2022_05_02_002257) do
     t.string "title", null: false
     t.string "author", null: false
     t.string "isbn", null: false
-    t.string "last_edited_by"
     t.integer "status", null: false
     t.integer "stock", null: false
     t.datetime "created_at", precision: 6, null: false

@@ -1,15 +1,26 @@
 class BookStockManagementController < ApplicationController
+
   def index
+    all_books = Book.all
+    render json: all_books.to_json
+  rescue StandardError => e
+    render json: {
+      error: e
+    }, status: :unprocessable_entity
   end
 
   def show
+    isbn = request.query_string.tr('=data', '')
+    book = Book.find_by!(isbn: isbn)
+    render json: book.to_json
+  rescue StandardError => e
+    render json: {
+      error: e
+    }, status: :unprocessable_entity
   end
 
   def create
-    new_book = Book.new(create_params)
-
-    raise new_book.errors.to_json unless new_book.save
-
+    Book.create!(create_params)
     render json: {
       message: "#{params[:title]}, by #{params[:author]}, with ISBN #{params[:isbn]} saved to database with stock level: #{params[:stock]}"
     }
@@ -20,6 +31,7 @@ class BookStockManagementController < ApplicationController
   end
 
   def update
+    Book.find_by(isbn: params[:isbn])
   end
 
   def destroy
