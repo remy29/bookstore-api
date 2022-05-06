@@ -49,7 +49,7 @@ class BookStockManagementController < ApplicationController
     book = Book.find_by!(isbn)
     book.destroy!
     render json: {
-      message: "Book with ISBN #{isbn} removed from dadsdsdsdtabase"
+      message: "Book with ISBN #{isbn} removed from database"
     }
   rescue StandardError => e
     render json: {
@@ -60,7 +60,7 @@ class BookStockManagementController < ApplicationController
   private
 
   def update_params
-    params.permit(:title, :author, :isbn, :stock)
+    params.permit(:title, :author, :stock)
   end
 
   def create_params
