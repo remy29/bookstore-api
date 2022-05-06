@@ -15,7 +15,7 @@
   - `rails test`
 
 * Running tasks
-  - `whenever --update-crontab --set environment='development`
+  - `whenever --update-crontab --set environment='development'`
 
 * Stopping tasks
   - `crontab -r`
@@ -25,7 +25,7 @@
 
 * Accessing 'front end'
   - `Active admin used as a simple front end allowing for detailed access to book database, as well as creation/edit/ delete functionality`
-  - `localted at http://localhost:3001/admin`
+  - `located at http://localhost:3001/admin`
   - `login credentials are found in secrets.yml. Set username to value in bookstore_api_key and password to value in bookstore_secret_key`
 
 * Example requests:
