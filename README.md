@@ -2,6 +2,7 @@
 
 * Ruby version ruby-2.6.5
 * Rails version 6.0.0.rc1
+* mysql2 db
 
 * Configuration
   - `bundle i`
@@ -14,7 +15,7 @@
   - `rails test`
 
 * Running tasks
-  - `whenever -w`
+  - `whenever --update-crontab --set environment='development`
 
 * Stopping tasks
   - `crontab -r`
