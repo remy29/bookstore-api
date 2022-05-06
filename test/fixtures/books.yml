@@ -1,11 +1,15 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  title: MyString
-  author: MyString
-  isbn: MyString
+  title: title1
+  author: author1
+  isbn: "123-466-789-122-1"
+  status: 2
+  stock: 0
 
 two:
-  title: MyString
-  author: MyString
-  isbn: MyString
+  title: title2
+  author: author2
+  isbn: 123-466-789-122-2
+  status: 0
+  stock: 20

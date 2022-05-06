@@ -12,7 +12,7 @@ class Book < ApplicationRecord
   def update_status(new_stock)
     return unless new_stock
 
-    new_status = stock_to_status(new_stock)
+    new_status = stock_to_status(new_stock.to_i)
 
     return if status == new_status
 
@@ -34,7 +34,7 @@ class Book < ApplicationRecord
   end
 
   def set_initial_status
-    self.status = stock_to_status(stock)
+    self.status = stock_to_status(stock.to_i)
   end
 
   def check_isbn

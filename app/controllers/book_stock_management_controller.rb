@@ -1,6 +1,5 @@
 # frozen_string_literal: true
-# HERE
-# rename controller
+
 class BookStockManagementController < ApplicationController
   def index
     all_books = Book.all
@@ -19,8 +18,7 @@ class BookStockManagementController < ApplicationController
       error: e
     }, status: :unprocessable_entity
   end
-  # HERE
-  # make example request
+
   def create
     Book.create!(create_params)
     render json: {
@@ -32,8 +30,7 @@ class BookStockManagementController < ApplicationController
       error: e
     }, status: :unprocessable_entity
   end
-  # HERE
-  # make example request
+
   def update
     isbn = params[:isbn]
     book = Book.find_by!(isbn)
@@ -52,7 +49,7 @@ class BookStockManagementController < ApplicationController
     book = Book.find_by!(isbn)
     book.destroy!
     render json: {
-      message: "Book with ISBN #{isbn} removed from database"
+      message: "Book with ISBN #{isbn} removed from dadsdsdsdtabase"
     }
   rescue StandardError => e
     render json: {
