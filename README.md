@@ -7,7 +7,7 @@
   - `bunlde i`
   - remove .example from config/secrets.example.yml and config/database.example.yml
 
-* Database creation
+* Database setup
   - `rails db:setup`
 
 * How to run the test suite
@@ -32,10 +32,10 @@
 * POST http://localhost:3001/book_stock_management/create
   ```
   params = {
-    "title": "a titlddde",
-    "author": "JP COOdddL GUY",
+    "title": "title1",
+    "author": "author1",
     "isbn": "123-446-789-122-1",
-    "stock": 0
+    "stock": 20
   }
   ```
 * PATCH http://localhost:3001/book_stock_management/update?isbn=123-446-789-122-1
@@ -45,3 +45,5 @@
   }
   ```
 * DELETE http://localhost:3001/book_stock_management/destroy?isbn=123-446-789-122-1
+
+* Authorization handled by HTTP Basic Auth. Refer to secrets.yml for values. Set username to value in bookstore_api_key and password to value in bookstore_secret_key
