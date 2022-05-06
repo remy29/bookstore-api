@@ -1,24 +1,29 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
 * Ruby version
-
-* System dependencies
+  ruby-2.6.5
 
 * Configuration
+  - `bunlde i`
+  - remove .example from config/secrets.example.yml and config/database.example.yml
 
 * Database creation
-
-* Database initialization
+  - `rails db:setup`
 
 * How to run the test suite
+  - `rails test`
 
-* Services (job queues, cache servers, search engines, etc.)
+* Running tasks
+  - `whenever -w`
 
-* Deployment instructions
+* Stopping tasks
+  - `crontab -r`
 
-* ...
+* Running server
+  - `rails s -p 3001`
+
+* Accessing 'front end'
+ - Active admin used as a simple front end allowing for detailed access to book database, as well as creation/edit/ delete functionality
+ - localted at `http://localhost:3001/admin`
+
+* Example requests
