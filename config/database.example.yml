@@ -8,3 +8,23 @@ development:
   reconnect: <%= ENV['RAILS_RECONNECT_DB'] || false %>
   pool: 5
   socket: /tmp/mysql.sock
+production:
+  adapter: mysql2
+  database: bookstore_api_dev
+  username: root
+  password: password
+  encoding: utf8
+  host: localhost
+  reconnect: <%= ENV['RAILS_RECONNECT_DB'] || false %>
+  pool: 5
+  socket: /tmp/mysql.sock
+test:
+  adapter: mysql2
+  database: bookstore_api_test
+  username: root
+  password: password
+  encoding: utf8
+  host: localhost
+  reconnect: <%= ENV['RAILS_RECONNECT_DB'] || false %>
+  pool: 5
+  socket: /tmp/mysql.sock
