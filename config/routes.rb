@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  ActiveAdmin.routes(self)
   get 'book_stock_management/index'
   get 'book_stock_management/show'
   post 'book_stock_management/create'
