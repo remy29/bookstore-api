@@ -1,6 +1,6 @@
 development:
   adapter: mysql2
-  database: netcent_api_dev
+  database: bookstore_api_dev
   username: root
   password: password
   encoding: utf8
