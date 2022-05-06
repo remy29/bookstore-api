@@ -31,7 +31,7 @@
 * GET http://localhost:3001/book_stock_management/index
 * GET http://localhost:3001/book_stock_management/show?isbn=123-446-789-122-1
 * POST http://localhost:3001/book_stock_management/create
-  ```
+  ``` JSON
   params = {
     "title": "title1",
     "author": "author1",
@@ -40,7 +40,7 @@
   }
   ```
 * PATCH http://localhost:3001/book_stock_management/update?isbn=123-446-789-122-1
-  ```
+  ``` JSON
   params = {
     "stock": 0
   }
