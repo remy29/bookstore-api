@@ -12,7 +12,7 @@ class BookStockManagementController < ApplicationController
   end
 
   def show
-    book = Book.find_by!(isbn: request.query_string.tr('=data', ''))
+    book = Book.find_by!(isbn: params[:isbn])
     render json: book.to_json
   rescue StandardError => e
     render json: {
@@ -35,7 +35,7 @@ class BookStockManagementController < ApplicationController
   # HERE
   # make example request
   def update
-    isbn = request.query_string.tr('=data', '')
+    isbn = params[:isbn]
     book = Book.find_by!(isbn)
     book.update!(update_params)
     message = "#{update_params.keys} updated to #{update_params.values} for book with ISBN #{isbn}"
@@ -48,11 +48,11 @@ class BookStockManagementController < ApplicationController
   end
 
   def destroy
-    isbn = request.query_string.tr('=data', '')
+    isbn = params[:isbn]
     book = Book.find_by!(isbn)
     book.destroy!
     render json: {
-      message: "Book with ISBN #{isbn} destroyed"
+      message: "Book with ISBN #{isbn} removed from database"
     }
   rescue StandardError => e
     render json: {
