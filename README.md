@@ -4,7 +4,7 @@
 * Rails version 6.0.0.rc1
 
 * Configuration
-  - `bunlde i`
+  - `bundle i`
   - remove .example from config/secrets.example.yml and config/database.example.yml
 
 * Database setup
