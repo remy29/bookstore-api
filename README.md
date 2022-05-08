@@ -30,20 +30,28 @@
 
 * Example requests:
 * GET http://localhost:3001/book_stock_management/index
-* GET http://localhost:3001/book_stock_management/show?isbn=123-446-789-122-1
+* GET http://localhost:3001/book_stock_management/show
+  ``` JSON
+  params = {
+    "title": "title1",
+    "store": "Books! Books? Books!"
+  }
+  ```
 * POST http://localhost:3001/book_stock_management/create
   ``` JSON
   params = {
     "title": "title1",
     "author": "author1",
     "isbn": "123-446-789-122-1",
-    "stock": 20
+    "stores": "[{\"name\":\"Books! Books? Books!\",\"stock\":5},{\"name\":\"Big John's Big Books\",\"stock\":1}]"
   }
   ```
-* PATCH http://localhost:3001/book_stock_management/update?isbn=123-446-789-122-1
+* PATCH http://localhost:3001/book_stock_management/update
   ``` JSON
   params = {
-    "stock": 0
+    "store": "Books! Books? Books!",
+    "isbn": "123-446-789-122-1",
+    "stock": 11
   }
   ```
 * DELETE http://localhost:3001/book_stock_management/destroy?isbn=123-446-789-122-1

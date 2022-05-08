@@ -1,3 +1,3 @@
 ActiveAdmin.register Book do
-  permit_params :title, :author, :isbn, :status, :stock
+  actions :index, :show
 end

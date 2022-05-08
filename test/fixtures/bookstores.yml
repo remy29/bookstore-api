@@ -1,0 +1,16 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id: 1
+  name: Big John's Big Books
+  address: 555 Main Street
+
+two:
+  id: 2
+  name: Books! Books? Books!
+  address: 123 Sesame Street
+
+three:
+  id: 3
+  name: Another bookstore?!
+  address: 223 Some Street

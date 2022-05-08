@@ -10,9 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_02_002257) do
+ActiveRecord::Schema.define(version: 2022_05_07_233317) do
 
   create_table "books", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "bookstore_id"
     t.string "title", null: false
     t.string "author", null: false
     t.string "isbn", null: false
@@ -20,6 +21,15 @@ ActiveRecord::Schema.define(version: 2022_05_02_002257) do
     t.integer "stock", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["bookstore_id"], name: "index_books_on_bookstore_id"
   end
 
+  create_table "bookstores", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "address", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  add_foreign_key "books", "bookstores"
 end

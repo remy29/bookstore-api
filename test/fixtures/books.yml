@@ -6,6 +6,7 @@ one:
   isbn: "123-466-789-122-1"
   status: 2
   stock: 0
+  bookstore_id: 1
 
 two:
   title: title2
@@ -13,3 +14,20 @@ two:
   isbn: 123-466-789-122-2
   status: 0
   stock: 20
+  bookstore_id: 1
+
+three:
+  title: title1
+  author: author1
+  isbn: "123-466-789-122-1"
+  status: 2
+  stock: 0
+  bookstore_id: 2
+
+four:
+  title: title2
+  author: author2
+  isbn: 123-466-789-122-2
+  status: 0
+  stock: 20
+  bookstore_id: 2

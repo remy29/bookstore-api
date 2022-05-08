@@ -11,8 +11,15 @@ class BookStockManagementController < ApplicationController
   end
 
   def show
-    book = Book.find_by!(isbn: params[:isbn])
-    render json: book.to_json
+    search_params = {}
+    search_params[:isbn] = params[:isbn] if params[:isbn]
+    search_params[:author] = params[:author] if params[:author]
+    search_params[:title] = params[:title] if params[:title]
+    search_params[:bookstore] = Bookstore.find_by!(name: params[:store]) if params[:store]
+    books = Book.where(search_params)
+    raise 'No entries found in database' if books.empty?
+
+    render json: books.to_json
   rescue StandardError => e
     render json: {
       error: e
@@ -20,10 +27,40 @@ class BookStockManagementController < ApplicationController
   end
 
   def create
-    Book.create!(create_params)
+    stores_and_stocks = []
+    store_added_to = []
+    errors = []
+    JSON.parse(params[:stores]).each do |store|
+      new_book = Book.new(
+        title: params[:title],
+        author: params[:author],
+        isbn: params[:isbn],
+        stock: store['stock'],
+        bookstore: Bookstore.find_by(name: store['name'])
+      )
+      if new_book.save
+        stores_and_stocks.push("#{store['name']} (stock: #{store['stock']})")
+        store_added_to.push(Bookstore.find_by(name: store['name']).id)
+      else
+        errors.push(
+          error: new_book.errors,
+          store: store['name']
+        )
+      end
+    end
+    raise errors.to_json if stores_and_stocks.empty?
+
+    Bookstore.where.not(id: store_added_to).each do |store|
+      store.add_book(
+        params[:title],
+        params[:author],
+        params[:isbn]
+      )
+    end
     render json: {
-      message: "#{create_params[:title]}, by #{create_params[:author]},"\
-               "with ISBN #{create_params[:isbn]} saved to database with stock level: #{create_params[:stock]}"
+      message: "#{params[:title]}, by #{params[:author]}, "\
+                "with ISBN #{params[:isbn]} added to #{stores_and_stocks.join(', ')} ",
+      errors: errors
     }
   rescue StandardError => e
     render json: {
@@ -32,11 +69,13 @@ class BookStockManagementController < ApplicationController
   end
 
   def update
-    isbn = params[:isbn]
-    book = Book.find_by!(isbn)
-    book.update!(update_params)
-    message = "#{update_params.keys} updated to #{update_params.values} for book with ISBN #{isbn}"
-    book.update_status(update_params[:stock]) && message += ", status updated to #{book.status}"
+    book = Book.find_by!(
+      isbn: params[:isbn],
+      bookstore: Bookstore.find_by!(name: params[:store])
+    )
+    book.update!(stock: params[:stock])
+    message = "Stock updated to #{params[:stock]} for book with ISBN #{params[:isbn]} at #{params[:store]}"
+    book.update_status(params[:stock]) && message += ", status updated to #{book.status}"
     render json: message
   rescue StandardError => e
     render json: {
@@ -46,10 +85,12 @@ class BookStockManagementController < ApplicationController
 
   def destroy
     isbn = params[:isbn]
-    book = Book.find_by!(isbn)
-    book.destroy!
+    books = Book.where(isbn)
+    raise "Couldn't find books" if books.empty?
+
+    books.destroy_all
     render json: {
-      message: "Book with ISBN #{isbn} removed from database"
+      message: "Books with ISBN #{isbn} removed from database"
     }
   rescue StandardError => e
     render json: {
@@ -57,13 +98,4 @@ class BookStockManagementController < ApplicationController
     }, status: :unprocessable_entity
   end
 
-  private
-
-  def update_params
-    params.permit(:title, :author, :stock)
-  end
-
-  def create_params
-    params.permit(:title, :author, :isbn, :stock)
-  end
 end

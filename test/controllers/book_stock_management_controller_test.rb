@@ -16,7 +16,10 @@ class BookStockManagementControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should get show with book in database' do
-    show_params = { isbn: '123-466-789-122-1' }
+    show_params = { 
+      isbn: '123-466-789-122-1',
+      store: "Big John's Big Books"
+    }
     get book_stock_management_show_url, params: show_params, headers: { Authorization: auth_headers }
     assert_response :success
   end
@@ -32,19 +35,20 @@ class BookStockManagementControllerTest < ActionDispatch::IntegrationTest
       title: 'title3',
       author: 'author3',
       isbn: '123-466-789-182-1',
-      stock: 0
+      stores: "[{\"name\":\"Books! Books? Books!\",\"stock\":5},{\"name\":\"Big John's Big Books\",\"stock\":1}]"
     }
     post book_stock_management_create_url, params: create_params, headers: { Authorization: auth_headers }
     assert_response :success
     assert_equal 'out_of_stock', Book.last.status
+    assert_equal 7, Book.all.count
   end
 
   test 'post create return an error if isbn is improperly formatted' do
     create_params = {
       title: 'title3',
       author: 'author3',
-      isbn: '123-466-789-182-12232323232',
-      stock: 0
+      isbn: '123-466-789-182-1232324343434343',
+      stores: "[{\"name\":\"Books! Books? Books!\",\"stock\":5},{\"name\":\"Big John's Big Books\",\"stock\":1}]"
     }
     post book_stock_management_create_url, params: create_params, headers: { Authorization: auth_headers }
     assert_response :unprocessable_entity
@@ -52,9 +56,9 @@ class BookStockManagementControllerTest < ActionDispatch::IntegrationTest
 
   test 'post create return an error if params are missing' do
     create_params = {
+      title: 'title3',
       author: 'author3',
-      isbn: '123-466-789-182-1',
-      stock: 0
+      stores: "[{\"name\":\"Books! Books? Books!\",\"stock\":5},{\"name\":\"Big John's Big Books\",\"stock\":1}]"
     }
     post book_stock_management_create_url, params: create_params, headers: { Authorization: auth_headers }
     assert_response :unprocessable_entity
@@ -62,12 +66,13 @@ class BookStockManagementControllerTest < ActionDispatch::IntegrationTest
 
   test 'patch update should return success and properly update status' do
     update_params = {
-      stock: 0,
-      isbn: '123-466-789-122-2'
+      store: 'Books! Books? Books!',
+      isbn: '123-466-789-122-1',
+      stock: 10
     }
     patch book_stock_management_update_url, params: update_params, headers: { Authorization: auth_headers }
     assert_response :success
-    assert_equal 'out_of_stock', Book.find_by(isbn: '123-466-789-122-2').status
+    assert_equal 'in_stock', Book.find_by(isbn: '123-466-789-122-1').status
   end
 
   test 'should destroy book by isbn' do

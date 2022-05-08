@@ -1,0 +1,1 @@
+load File.join(Rails.root, 'db', 'seeds', 'bookstores.rb') if Rails.env.development?

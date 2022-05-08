@@ -1,6 +1,6 @@
 class Book < ApplicationRecord
   validate :check_isbn
-  validates :isbn, uniqueness: true
+  validate :isbn_unique?, on: :create
   validates :author, presence: true
   validates :title, presence: true
   validates :stock, presence: true, numericality: { greater_than_or_equal_to: 0 }
@@ -8,6 +8,8 @@ class Book < ApplicationRecord
   enum status: %i[in_stock low_on_stock out_of_stock]
 
   before_create :set_initial_status
+
+  belongs_to :bookstore
 
   def update_status(new_stock)
     return unless new_stock
@@ -44,5 +46,9 @@ class Book < ApplicationRecord
     isbn_length = isbn.tr('^0-9', '').length
     errors.add(:isbn, 'isbn must be either 10 or 13 digits long') unless [10, 13].include?(isbn_length)
     errors.add(:isbn, "isbn must contain only numbers or '-'") unless only_valid_chars
+  end
+
+  def isbn_unique?
+    errors.add(:isbn, 'isbn must be unique') if Book.find_by(isbn: isbn, bookstore_id: bookstore[:id])
   end
 end
