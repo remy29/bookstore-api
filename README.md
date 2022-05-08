@@ -33,8 +33,8 @@
 * GET http://localhost:3001/book_stock_management/show
   ``` JSON
   params = {
-    "title": "title1",
-    "store": "Books! Books? Books!"
+    "store": "Another bookstore?!",
+    "status": "out_of_stock"
   }
   ```
 * POST http://localhost:3001/book_stock_management/create

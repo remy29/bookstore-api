@@ -15,6 +15,7 @@ class BookStockManagementController < ApplicationController
     search_params[:isbn] = params[:isbn] if params[:isbn]
     search_params[:author] = params[:author] if params[:author]
     search_params[:title] = params[:title] if params[:title]
+    search_params[:status] = params[:status] if params[:status]
     search_params[:bookstore] = Bookstore.find_by!(name: params[:store]) if params[:store]
     books = Book.where(search_params)
     raise 'No entries found in database' if books.empty?
